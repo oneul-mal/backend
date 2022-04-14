@@ -8,6 +8,7 @@ import self.project.oneulmal.concern.domain.Concern;
 import self.project.oneulmal.concern.domain.ConcernRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,4 +26,10 @@ public class ConcernService {
     }
 
 
+    public ConcernResponseDto findConcern(Long concernId) {
+        Concern concern = concernRepository.findById(concernId)
+                .orElseThrow(RuntimeException::new);
+
+        return ConcernResponseDto.create(concern);
+    }
 }

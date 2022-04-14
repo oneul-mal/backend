@@ -11,8 +11,11 @@ import self.project.oneulmal.concern.domain.Concern;
 import self.project.oneulmal.concern.domain.ConcernRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,5 +42,20 @@ class ConcernServiceTest {
 
         assertThat(concerns).extracting("title")
                 .containsExactly(concern1.getTitle(), concern2.getTitle());
+    }
+
+    @DisplayName("단일 고민글을 조회한다")
+    @Test
+    void findConcern() {
+        Concern concern = Concern.create("고민이 있어요", "장난이에요");
+
+        when(concernRepository.findById(anyLong())).thenReturn(Optional.of(concern));
+
+        ConcernResponseDto concernResponseDto = concernService.findConcern(1L);
+
+        assertAll(
+                () -> assertThat(concernResponseDto.getTitle()).isEqualTo(concern.getTitle()),
+                () -> assertThat(concernResponseDto.getDescription()).isEqualTo(concern.getDescription())
+        );
     }
 }
