@@ -1,4 +1,4 @@
-package self.project.oneulmal.user;
+package self.project.oneulmal.user.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
