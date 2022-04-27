@@ -35,8 +35,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    // TODO 
-    // 어 json으로 받아서 로그인하는 것 해야되는데
-    // 그전에 회원가입 로직부터 만들고
-    // 로그인 진행하자
 }

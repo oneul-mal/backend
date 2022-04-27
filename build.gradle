@@ -45,3 +45,11 @@ tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
 }
+
+processResources.dependsOn('copySubmodule')
+
+task copySubmodule(type: Copy){
+	from './security'
+	include '*.yml'
+	into './src/main/resources'
+}
