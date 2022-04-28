@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import self.project.oneulmal.security.PrincipalDetails;
 import self.project.oneulmal.user.domain.User;
 import self.project.oneulmal.user.domain.UserRepository;
 

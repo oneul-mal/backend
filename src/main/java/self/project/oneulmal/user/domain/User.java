@@ -35,4 +35,13 @@ public class User {
         this.provider = provider;
         this.role = role;
     }
+
+    public User(String name, String password, String nickname, String email, String provider, String role) {
+        this.name = name;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.provider = provider;
+        this.role = role;
+    }
 }
