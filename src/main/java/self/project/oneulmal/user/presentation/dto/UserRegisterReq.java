@@ -23,6 +23,7 @@ public class UserRegisterReq {
                 .password(bCryptPasswordEncoder.encode(password))
                 .nickname(nickname)
                 .email(email)
+                .role("ROLE_USER")
                 .build();
     }
 }

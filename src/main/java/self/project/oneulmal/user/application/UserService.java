@@ -9,6 +9,8 @@ import self.project.oneulmal.user.presentation.dto.UserAssembler;
 import self.project.oneulmal.user.presentation.dto.UserRegisterReq;
 import self.project.oneulmal.user.presentation.dto.UserRegisterRes;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,6 +20,10 @@ public class UserService {
 
     public UserRegisterRes save(UserRegisterReq userRegisterReq) {
         User user = userRegisterReq.toEntity(bCryptPasswordEncoder);
+        Optional<User> optionalUser = userRepository.findByName(user.getName());
+        if (optionalUser.isPresent()) {
+            return UserAssembler.userRegisterRes(userRegisterReq);
+        }
         userRepository.save(user);
         return UserAssembler.userRegisterRes(userRegisterReq);
     }

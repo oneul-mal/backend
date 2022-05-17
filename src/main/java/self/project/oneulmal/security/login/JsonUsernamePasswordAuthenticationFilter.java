@@ -23,7 +23,9 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 
         ObjectMapper mapper = new ObjectMapper();
         LoginDto loginDto = mapper.readValue(request.getInputStream(), LoginDto.class); // getInputStream 에러 잡기 -> SneakyThrows
-        
+
+        System.out.println("loginDto.getUsername() = " + loginDto.getUsername());
+
         String username = loginDto.getUsername();
         username = (username != null) ? username : "";
         username = username.trim();

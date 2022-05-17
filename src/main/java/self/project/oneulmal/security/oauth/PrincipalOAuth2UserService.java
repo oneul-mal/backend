@@ -14,6 +14,7 @@ import self.project.oneulmal.user.domain.User;
 import self.project.oneulmal.user.domain.UserRepository;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +27,6 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        String name = oAuth2User.getAttribute("name");
-        String email = oAuth2User.getAttribute("email");
 
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
@@ -35,10 +34,17 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes().get("response"));
         }
 
+        Optional<User> optionalUser = userRepository.findByName(oAuth2UserInfo.getName());
+        if (optionalUser.isPresent()) {
+            return new PrincipalDetails(optionalUser.get(), oAuth2User.getAttributes());
+        }
+
         User user = User.builder()
                 .name(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
                 .provider(oAuth2UserInfo.getProvider())
+                .nickname(oAuth2UserInfo.getNickname())
+                .role("ROLE_USER")
                 .build();
 
         userRepository.save(user);
